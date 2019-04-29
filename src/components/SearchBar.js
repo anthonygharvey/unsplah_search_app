@@ -5,13 +5,19 @@ export class SearchBar extends Component {
     term: ""
   };
 
+  onFormSubmit = e => {
+    e.preventDefault();
+    this.props.submit(this.state.term);
+  };
+
   render() {
     return (
       <div className="ui segment">
-        <form className="ui form">
+        <form className="ui form" onSubmit={this.onFormSubmit}>
           <div className="field">
             <label>Image Search</label>
             <input
+              id="search"
               type="text"
               placeholder="Enter a search term"
               value={this.state.term}
