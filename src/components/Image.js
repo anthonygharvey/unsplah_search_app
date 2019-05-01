@@ -1,8 +1,30 @@
 import React from "react";
 
-const Image = props => {
-  const { url, alt } = props;
-  return <img src={url} alt={alt} />;
-};
+class Image extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { spans: 0 };
+    this.imageRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.imageRef.current.addEventListener("load", this.setSpans);
+  }
+
+  setSpans = () => {
+    const height = this.imageRef.current.clientHeight;
+    const spans = Math.ceil(height / 10 + 1);
+    this.setState({ spans });
+  };
+
+  render() {
+    const { urls, alt_description } = this.props.image;
+    return (
+      <div style={{ gridRowEnd: `span ${this.state.spans}` }}>
+        <img ref={this.imageRef} src={urls.regular} alt={alt_description} />
+      </div>
+    );
+  }
+}
 
 export default Image;
